@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico"/>
+
+    <title>Navbar Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+<body>
+<div class="container">
+    <!-- Main component for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <h2> Hyperledger Fabric Simple Demo</h2>
+
+        <form action="#" th:action="@{'/enrollAdmin'}" th:method="POST">
+            <button type="submit" id="submitButton">Enroll admin</button>
+        </form>
+
+        <h6 th:if="${resultEnrollAdmin != null}">
+            <span th:text="'Enroll admin result: ' + ${resultEnrollAdmin}"></span>
+        </h6>
+
+        <form action="#" th:action="@{'/registerUser'}" th:method="POST">
+            <button type="submit" id="submitButton2">Register User</button>
+        </form>
+
+        <h6 th:if="${resultRegisterUser != null}">
+            <span th:text="'Register user result: ' + ${resultRegisterUser}"></span>
+        </h6>
+
+        <form action="#" th:action="@{'/getAllCars'}" th:method="POST">
+            <button type="submit" id="submitButton3">Get all cars</button>
+        </form>
+
+        <h6 th:if="${resultCars != null}">
+            <span th:text="'Get all cars result:'"></span>
+            <span th:if="${resultCarsError != null}" th:text="'Get all cars result:' + ${resultCarsError}"></span>
+            <div th:if="${resultCarsError == null}">
+                <table>
+                    <thead>
+                    <tr>
+                        <th> ID</th>
+                        <th> Make</th>
+                        <th> Model</th>
+                        <th> Color</th>
+                        <th> Owner</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${resultCars.isEmpty()}">
+                        <td colspan="2"> No data Available</td>
+                    </tr>
+                    <tr th:each="carResult : ${resultCars}">
+                        <td>
+                        <span th:text="${carResult.key}"> ID </span></td>
+                        <td><span th:text="${carResult.record.make}"> Make </span></td>
+                        <td><span th:text="${carResult.record.model}"> Model </span></td>
+                        <td><span th:text="${carResult.record.color}"> Color </span></td>
+                        <td><span th:text="${carResult.record.owner}"> Owner </span></td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </h6>
+
+        <form action="#" th:action="@{'/createCar'}" th:method="POST" th:object="${result}">
+            <div class="form-group blu-margin">
+                ID : <input type="text" id="idInput" name="idInput" th:field="*{key}"/>
+            </div>
+            <div class="form-group blu-margin">
+                Make : <input type="text" id="makeInput" name="makeInput" th:field="*{record.make}"/>
+            </div>
+            <div class="form-group blu-margin">
+                Model : <input type="text" id="modelInput" name="modelInput" th:field="*{record.model}"/>
+            </div>
+            <div class="form-group blu-margin">
+                Color : <input type="text" id="colorInput" name="colorInput" th:field="*{record.color}"/>
+            </div>
+            <div class="form-group blu-margin">
+                Owner : <input type="text" id="ownerInput" name="ownerInput" th:field="*{record.owner}"/>
+            </div>
+            <button type="submit" id="submitCreate">Create car</button>
+        </form>
+
+        <h6 th:if="${resultCreateCar != null}">
+            <span th:text="'Create car resul: ' + ${resultCreateCar}"></span>
+        </h6>
+
+
+    </div>
+</div> <!-- /container -->
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="../js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+</body>
+</html>
